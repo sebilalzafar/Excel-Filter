@@ -1,0 +1,177 @@
+{% extends "base.html" %} {% load static %} {% block head %}
+<style>
+  body {
+    background-color: #2590eb !important;
+    height: 100%;
+  }
+</style>
+<script>
+  function submitForm() {
+    var loader = document.getElementById("loader");
+    loader.style.display = "flex";
+    uploadFile();
+    document.getElementById("uploadForm").submit();
+  }
+</script>
+{% endblock head %} {% block content %}
+
+<div class="wrapper">
+  <div class="file-upload">
+    <form id="uploadForm" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input
+        name="file"
+        onchange="uploadFile()"
+        accept=".xlsx"
+        required
+        type="file"
+        id="file"
+      />
+    </form>
+    <i class="fa fa-arrow-up"></i>
+  </div>
+  <progress id="progressBar" value="0" max="100"></progress>
+  <h3 id="status"></h3>
+  <p id="loaded_n_total"></p>
+  <button
+    class="continue-application"
+    data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop"
+  >
+    <div>
+      <div class="pencil"></div>
+      <div class="folder">
+        <div class="top">
+          <svg viewBox="0 0 24 27">
+            <path
+              d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"
+            ></path>
+          </svg>
+        </div>
+        <div class="paper"></div>
+      </div>
+    </div>
+    Existing Files
+  </button>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          List Of existing Files
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <table class="table caption-top">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">File Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">Total Downloads</th>
+              <th scope="col">Go To File</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in all_files %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{i.file}}</td>
+              <td>{{i.created_at|date:"d-m-Y"}}</td>
+              <td>{{i.total_downloads}}</td>
+              <td>
+                <a href="{% url 'header_checks' i.id %}" class="Btn">
+                  <svg
+                    class="svgIcon"
+                    viewBox="0 0 384 512"
+                    height="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                    ></path>
+                  </svg>
+                  <span class="icon2"></span>
+                  <span class="tooltip">Download</span>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %} {% block script %}
+
+<script>
+  function _(el) {
+    return document.getElementById(el);
+}
+  function uploadFile() {
+    var file = _("file").files[0];
+    var fileSize = file.size;
+    var chunkSize = 1024 * 1024; // 1MB chunks
+    var bytesUploaded = 0;
+
+    var uploadProgress = setInterval(function () {
+        // Simulate file upload progress
+        bytesUploaded += chunkSize;
+        
+        // Ensure bytesUploaded does not exceed fileSize
+        if (bytesUploaded > fileSize) {
+            bytesUploaded = fileSize;
+        }
+
+        // Calculate percentage of bytes uploaded
+        var percent = (bytesUploaded / fileSize) * 100;
+
+        // Update progress bar and status
+        _("loaded_n_total").innerHTML =
+            "Uploaded " + bytesUploaded + " bytes of " + fileSize;
+        _("progressBar").value = Math.round(percent);
+        _("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
+
+        // Check if upload is complete
+        if (bytesUploaded >= fileSize) {
+            clearInterval(uploadProgress);
+            _("status").innerHTML = "Upload complete";
+
+            // Show loader
+            _("loader").style.display = "flex";
+
+            // Show status header fetching
+            _("status").innerHTML = "Fetching...";
+
+            document.getElementById("uploadForm").submit(); // Manually submit the form
+        }
+    }, 1000); // Update progress every second (adjust as needed)
+}
+
+
+</script>
+{% endblock script %}

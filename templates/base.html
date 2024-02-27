@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static "css/style.css" %}"> {% block head %}
+    {% endblock head %}
+  </head>
+  <body>
+    <!-- loader -->
+
+    <div
+      aria-label="Orange and tan hamster running in a metal wheel"
+      role="img"
+      id="loader"
+      class="wheel-and-hamster"
+    >
+      <div class="wheel"></div>
+      <div class="hamster">
+        <div class="hamster__body">
+          <div class="hamster__head">
+            <div class="hamster__ear"></div>
+            <div class="hamster__eye"></div>
+            <div class="hamster__nose"></div>
+          </div>
+          <div class="hamster__limb hamster__limb--fr"></div>
+          <div class="hamster__limb hamster__limb--fl"></div>
+          <div class="hamster__limb hamster__limb--br"></div>
+          <div class="hamster__limb hamster__limb--bl"></div>
+          <div class="hamster__tail"></div>
+        </div>
+      </div>
+      <div class="spoke"></div>
+    </div>
+
+    <!-- loader -->
+
+    {% block content %} {% endblock content %}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var loader = document.getElementById("loader");
+        const filterForm = document.getElementById("filterForm");
+
+        var isLoaderVisible = false;
+
+        // Show the loader
+        function showLoader() {
+          loader.style.display = "flex";
+          isLoaderVisible = true;
+        }
+
+        // Hide the loader
+        function hideLoader() {
+          loader.style.display = "none";
+          isLoaderVisible = false;
+        }
+
+        // Attach event listeners to all links
+        var links = document.querySelectorAll("a");
+        links.forEach(function (link) {
+          link.addEventListener("click", function () {
+            showLoader();
+            setTimeout(function () {
+              hideLoader();
+            }, 100); // Adjust the timeout value as needed
+          });
+        });
+
+        // Attach event listener to window load
+        window.addEventListener("load", function () {
+          hideLoader();
+        });
+
+        // Attach event listener to hash change
+        window.addEventListener("hashchange", function () {
+          if (!isLoaderVisible) {
+            hideLoader();
+          }
+        });
+
+        // Attach event listener to form submission
+        var forms = document.querySelectorAll("form");
+        forms.forEach(function (form) {
+          form.addEventListener("submit", function () {
+            showLoader();
+            setTimeout(function () {
+              hideLoader();
+            }, 5000);
+          });
+        });
+      });
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/htmx.js' %}"></script>
+
+    {% block script %}
+    
+    {% endblock script %}
+  </body>
+</html>

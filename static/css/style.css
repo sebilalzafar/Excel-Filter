@@ -1,0 +1,930 @@
+html {
+    height: 100%;
+}
+
+
+
+a {
+    text-decoration: none !important;
+
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.wrapper .file-upload {
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #fff;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom, #2590eb 50%, #fff 50%);
+    background-size: 100% 200%;
+    transition: all 1s;
+    color: #fff;
+    font-size: 100px;
+    margin: 15px;
+}
+
+.wrapper .file-upload input[type='file'] {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.wrapper .file-upload:hover {
+    background-position: 0 -100%;
+    color: #2590eb;
+}
+
+
+
+/* button */
+
+.continue-application {
+    --color: #fff;
+    --background: #404660;
+    --background-hover: #3A4059;
+    --background-left: #2B3044;
+    --folder: #F3E9CB;
+    --folder-inner: #BEB393;
+    --paper: #FFFFFF;
+    --paper-lines: #BBC1E1;
+    --paper-behind: #E1E6F9;
+    --pencil-cap: #fff;
+    --pencil-top: #275EFE;
+    --pencil-middle: #fff;
+    --pencil-bottom: #5C86FF;
+    --shadow: rgba(13, 15, 25, .2);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19px;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    padding: 17px 29px 17px 69px;
+    transition: background 0.3s;
+    color: var(--color);
+    background: var(--bg, var(--background));
+}
+
+.continue-application {
+    font-size: 20px;
+}
+
+.continue-application>div {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 53px;
+    position: absolute;
+    overflow: hidden;
+    border-radius: 5px 0 0 5px;
+    background: var(--background-left);
+}
+
+.continue-application>div .folder {
+    width: 23px;
+    height: 27px;
+    position: absolute;
+    left: 15px;
+    top: 13px;
+}
+
+.continue-application>div .folder .top {
+    left: 0;
+    top: 0;
+    z-index: 2;
+    position: absolute;
+    transform: translateX(var(--fx, 0));
+    transition: transform 0.4s ease var(--fd, 0.3s);
+}
+
+.continue-application>div .folder .top svg {
+    width: 24px;
+    height: 27px;
+    display: block;
+    fill: var(--folder);
+    transform-origin: 0 50%;
+    transition: transform 0.3s ease var(--fds, 0.45s);
+    transform: perspective(120px) rotateY(var(--fr, 0deg));
+}
+
+.continue-application>div .folder:before,
+.continue-application>div .folder:after,
+.continue-application>div .folder .paper {
+    content: "";
+    position: absolute;
+    left: var(--l, 0);
+    top: var(--t, 0);
+    width: var(--w, 100%);
+    height: var(--h, 100%);
+    border-radius: 1px;
+    background: var(--b, var(--folder-inner));
+}
+
+.continue-application>div .folder:before {
+    box-shadow: 0 1.5px 3px var(--shadow), 0 2.5px 5px var(--shadow), 0 3.5px 7px var(--shadow);
+    transform: translateX(var(--fx, 0));
+    transition: transform 0.4s ease var(--fd, 0.3s);
+}
+
+.continue-application>div .folder:after,
+.continue-application>div .folder .paper {
+    --l: 1px;
+    --t: 1px;
+    --w: 21px;
+    --h: 25px;
+    --b: var(--paper-behind);
+}
+
+.continue-application>div .folder:after {
+    transform: translate(var(--pbx, 0), var(--pby, 0));
+    transition: transform 0.4s ease var(--pbd, 0s);
+}
+
+.continue-application>div .folder .paper {
+    z-index: 1;
+    --b: var(--paper);
+}
+
+.continue-application>div .folder .paper:before,
+.continue-application>div .folder .paper:after {
+    content: "";
+    width: var(--wp, 14px);
+    height: 2px;
+    border-radius: 1px;
+    transform: scaleY(0.5);
+    left: 3px;
+    top: var(--tp, 3px);
+    position: absolute;
+    background: var(--paper-lines);
+    box-shadow: 0 12px 0 0 var(--paper-lines), 0 24px 0 0 var(--paper-lines);
+}
+
+.continue-application>div .folder .paper:after {
+    --tp: 6px;
+    --wp: 10px;
+}
+
+.continue-application>div .pencil {
+    height: 2px;
+    width: 3px;
+    border-radius: 1px 1px 0 0;
+    top: 8px;
+    left: 105%;
+    position: absolute;
+    z-index: 3;
+    transform-origin: 50% 19px;
+    background: var(--pencil-cap);
+    transform: translateX(var(--pex, 0)) rotate(35deg);
+    transition: transform 0.4s ease var(--pbd, 0s);
+}
+
+.continue-application>div .pencil:before,
+.continue-application>div .pencil:after {
+    content: "";
+    position: absolute;
+    display: block;
+    background: var(--b, linear-gradient(var(--pencil-top) 55%, var(--pencil-middle) 55.1%, var(--pencil-middle) 60%, var(--pencil-bottom) 60.1%));
+    width: var(--w, 5px);
+    height: var(--h, 20px);
+    border-radius: var(--br, 2px 2px 0 0);
+    top: var(--t, 2px);
+    left: var(--l, -1px);
+}
+
+.continue-application>div .pencil:before {
+    -webkit-clip-path: polygon(0 5%, 5px 5%, 5px 17px, 50% 20px, 0 17px);
+    clip-path: polygon(0 5%, 5px 5%, 5px 17px, 50% 20px, 0 17px);
+}
+
+.continue-application>div .pencil:after {
+    --b: none;
+    --w: 3px;
+    --h: 6px;
+    --br: 0 2px 1px 0;
+    --t: 3px;
+    --l: 3px;
+    border-top: 1px solid var(--pencil-top);
+    border-right: 1px solid var(--pencil-top);
+}
+
+.continue-application:before,
+.continue-application:after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--color);
+    transform-origin: 9px 1px;
+    transform: translateX(var(--cx, 0)) scale(0.5) rotate(var(--r, -45deg));
+    top: 26px;
+    right: 16px;
+    transition: transform 0.3s;
+}
+
+.continue-application:after {
+    --r: 45deg;
+}
+
+.continue-application:hover {
+    --cx: 2px;
+    --bg: var(--background-hover);
+    --fx: -40px;
+    --fr: -60deg;
+    --fd: .15s;
+    --fds: 0s;
+    --pbx: 3px;
+    --pby: -3px;
+    --pbd: .15s;
+    --pex: -24px;
+}
+
+
+
+.Btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgb(27, 27, 27);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition-duration: .3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.11);
+}
+
+.svgIcon {
+    fill: rgb(214, 178, 255);
+}
+
+.icon2 {
+    width: 18px;
+    height: 5px;
+    border-bottom: 2px solid rgb(182, 143, 255);
+    border-left: 2px solid rgb(182, 143, 255);
+    border-right: 2px solid rgb(182, 143, 255);
+}
+
+.tooltip {
+    position: absolute;
+    right: -105px;
+    opacity: 0;
+    background-color: rgb(12, 12, 12);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: .2s;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+}
+
+.tooltip::before {
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: rgb(12, 12, 12);
+    background-size: 1000%;
+    background-position: center;
+    transform: rotate(45deg);
+    left: -5%;
+    transition-duration: .3s;
+}
+
+.Btn:hover .tooltip {
+    opacity: 1;
+    transition-duration: .3s;
+}
+
+.Btn:hover {
+    background-color: rgb(150, 94, 255);
+    transition-duration: .3s;
+}
+
+.Btn:hover .icon2 {
+    border-bottom: 2px solid rgb(235, 235, 235);
+    border-left: 2px solid rgb(235, 235, 235);
+    border-right: 2px solid rgb(235, 235, 235);
+}
+
+.Btn:hover .svgIcon {
+    fill: rgb(255, 255, 255);
+    animation: slide-in-top 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-top {
+    0% {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    border: none;
+    position: relative;
+    margin-bottom: 30px;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1), 0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12), 0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
+}
+
+.l-bg-cherry {
+    background: linear-gradient(to right, #493240, #f09) !important;
+    color: #fff;
+}
+
+.l-bg-blue-dark {
+    background: linear-gradient(to right, #373b44, #4286f4) !important;
+    color: #fff;
+}
+
+.l-bg-green-dark {
+    background: linear-gradient(to right, #0a504a, #38ef7d) !important;
+    color: #fff;
+}
+
+.l-bg-orange-dark {
+    background: linear-gradient(to right, #a86008, #ffba56) !important;
+    color: #fff;
+}
+
+.card .card-statistic-3 .card-icon-large .fas,
+.card .card-statistic-3 .card-icon-large .far,
+.card .card-statistic-3 .card-icon-large .fab,
+.card .card-statistic-3 .card-icon-large .fal {
+    font-size: 110px;
+}
+
+.card .card-statistic-3 .card-icon {
+    text-align: center;
+    line-height: 50px;
+    margin-left: 15px;
+    color: #000;
+    position: absolute;
+    right: -5px;
+    top: 20px;
+    opacity: 0.1;
+}
+
+.l-bg-cyan {
+    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+    color: #fff;
+}
+
+.l-bg-green {
+    background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
+    color: #fff;
+}
+
+.l-bg-orange {
+    background: linear-gradient(to right, #f9900e, #ffba56) !important;
+    color: #fff;
+}
+
+.l-bg-cyan {
+    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+    color: #fff;
+}
+
+
+
+.checkbox-wrapper-12 {
+    position: relative;
+}
+
+.checkbox-wrapper-12>svg {
+    position: absolute;
+    top: -130%;
+    left: -170%;
+    width: 110px;
+    pointer-events: none;
+}
+
+.checkbox-wrapper-12 * {
+    box-sizing: border-box;
+}
+
+.checkbox-wrapper-12 input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    margin: 0;
+}
+
+.checkbox-wrapper-12 input[type="checkbox"]:focus {
+    outline: 0;
+}
+
+.checkbox-wrapper-12 .cbx {
+    width: 24px;
+    height: 24px;
+    top: calc(100px - 12px);
+    left: calc(100px - 12px);
+}
+
+.checkbox-wrapper-12 .cbx input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #bfbfc0;
+    border-radius: 50%;
+}
+
+.checkbox-wrapper-12 .cbx label {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: trasnlate3d(0, 0, 0);
+    pointer-events: none;
+}
+
+.checkbox-wrapper-12 .cbx svg {
+    position: absolute;
+    top: 5px;
+    left: 4px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.checkbox-wrapper-12 .cbx svg path {
+    stroke: #fff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 19;
+    stroke-dashoffset: 19;
+    transition: stroke-dashoffset 0.3s ease;
+    transition-delay: 0.2s;
+}
+
+.checkbox-wrapper-12 .cbx input:checked+label {
+    animation: splash-12 0.6s ease forwards;
+}
+
+.checkbox-wrapper-12 .cbx input:checked+label+svg path {
+    stroke-dashoffset: 0;
+}
+
+@-moz-keyframes splash-12 {
+    40% {
+        background: lime;
+        box-shadow: 0 -18px 0 -8px lime, 16px -8px 0 -8px lime, 16px 8px 0 -8px lime,
+            0 18px 0 -8px lime, -16px 8px 0 -8px lime, -16px -8px 0 -8px lime;
+    }
+
+    100% {
+        background: lime;
+        box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent,
+            32px 16px 0 -10px transparent, 0 36px 0 -10px transparent,
+            -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+    }
+}
+
+@-webkit-keyframes splash-12 {
+    40% {
+        background: lime;
+        box-shadow: 0 -18px 0 -8px lime, 16px -8px 0 -8px lime, 16px 8px 0 -8px lime,
+            0 18px 0 -8px lime, -16px 8px 0 -8px lime, -16px -8px 0 -8px lime;
+    }
+
+    100% {
+        background: lime;
+        box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent,
+            32px 16px 0 -10px transparent, 0 36px 0 -10px transparent,
+            -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+    }
+}
+
+@-o-keyframes splash-12 {
+    40% {
+        background: lime;
+        box-shadow: 0 -18px 0 -8px lime, 16px -8px 0 -8px lime, 16px 8px 0 -8px lime,
+            0 18px 0 -8px lime, -16px 8px 0 -8px lime, -16px -8px 0 -8px lime;
+    }
+
+    100% {
+        background: lime;
+        box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent,
+            32px 16px 0 -10px transparent, 0 36px 0 -10px transparent,
+            -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+    }
+}
+
+@keyframes splash-12 {
+    40% {
+        background: lime;
+        box-shadow: 0 -18px 0 -8px lime, 16px -8px 0 -8px lime, 16px 8px 0 -8px lime,
+            0 18px 0 -8px lime, -16px 8px 0 -8px lime, -16px -8px 0 -8px lime;
+    }
+
+    100% {
+        background: lime;
+        box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent,
+            32px 16px 0 -10px transparent, 0 36px 0 -10px transparent,
+            -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+    }
+}
+
+
+.wheel-and-hamster {
+    --dur: 1s;
+    width: 12em;
+    height: 12em;
+    font-size: 14px;
+    position: fixed;
+    z-index: 999999999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform: -webkit-translate(-50%, -50%);
+    transform: -moz-translate(-50%, -50%);
+    transform: -ms-translate(-50%, -50%);
+}
+
+.wheel,
+.hamster,
+.hamster div,
+.spoke {
+    position: absolute;
+}
+
+.wheel,
+.spoke {
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.wheel {
+    background: radial-gradient(100% 100% at center, hsla(0, 0%, 60%, 0) 47.8%, hsl(0, 0%, 60%) 48%);
+    z-index: 2;
+}
+
+.hamster {
+    animation: hamster var(--dur) ease-in-out infinite;
+    top: 50%;
+    left: calc(50% - 3.5em);
+    width: 7em;
+    height: 3.75em;
+    transform: rotate(4deg) translate(-0.8em, 1.85em);
+    transform-origin: 50% 0;
+    z-index: 1;
+}
+
+.hamster__head {
+    animation: hamsterHead var(--dur) ease-in-out infinite;
+    background: hsl(30, 90%, 55%);
+    border-radius: 70% 30% 0 100% / 40% 25% 25% 60%;
+    box-shadow: 0 -0.25em 0 hsl(30, 90%, 80%) inset,
+        0.75em -1.55em 0 hsl(30, 90%, 90%) inset;
+    top: 0;
+    left: -2em;
+    width: 2.75em;
+    height: 2.5em;
+    transform-origin: 100% 50%;
+}
+
+.hamster__ear {
+    animation: hamsterEar var(--dur) ease-in-out infinite;
+    background: hsl(0, 90%, 85%);
+    border-radius: 50%;
+    box-shadow: -0.25em 0 hsl(30, 90%, 55%) inset;
+    top: -0.25em;
+    right: -0.25em;
+    width: 0.75em;
+    height: 0.75em;
+    transform-origin: 50% 75%;
+}
+
+.hamster__eye {
+    animation: hamsterEye var(--dur) linear infinite;
+    background-color: hsl(0, 0%, 0%);
+    border-radius: 50%;
+    top: 0.375em;
+    left: 1.25em;
+    width: 0.5em;
+    height: 0.5em;
+}
+
+.hamster__nose {
+    background: hsl(0, 90%, 75%);
+    border-radius: 35% 65% 85% 15% / 70% 50% 50% 30%;
+    top: 0.75em;
+    left: 0;
+    width: 0.2em;
+    height: 0.25em;
+}
+
+.hamster__body {
+    animation: hamsterBody var(--dur) ease-in-out infinite;
+    background: hsl(30, 90%, 90%);
+    border-radius: 50% 30% 50% 30% / 15% 60% 40% 40%;
+    box-shadow: 0.1em 0.75em 0 hsl(30, 90%, 55%) inset,
+        0.15em -0.5em 0 hsl(30, 90%, 80%) inset;
+    top: 0.25em;
+    left: 2em;
+    width: 4.5em;
+    height: 3em;
+    transform-origin: 17% 50%;
+    transform-style: preserve-3d;
+}
+
+.hamster__limb--fr,
+.hamster__limb--fl {
+    clip-path: polygon(0 0, 100% 0, 70% 80%, 60% 100%, 0% 100%, 40% 80%);
+    top: 2em;
+    left: 0.5em;
+    width: 1em;
+    height: 1.5em;
+    transform-origin: 50% 0;
+}
+
+.hamster__limb--fr {
+    animation: hamsterFRLimb var(--dur) linear infinite;
+    background: linear-gradient(hsl(30, 90%, 80%) 80%, hsl(0, 90%, 75%) 80%);
+    transform: rotate(15deg) translateZ(-1px);
+}
+
+.hamster__limb--fl {
+    animation: hamsterFLLimb var(--dur) linear infinite;
+    background: linear-gradient(hsl(30, 90%, 90%) 80%, hsl(0, 90%, 85%) 80%);
+    transform: rotate(15deg);
+}
+
+.hamster__limb--br,
+.hamster__limb--bl {
+    border-radius: 0.75em 0.75em 0 0;
+    clip-path: polygon(0 0, 100% 0, 100% 30%, 70% 90%, 70% 100%, 30% 100%, 40% 90%, 0% 30%);
+    top: 1em;
+    left: 2.8em;
+    width: 1.5em;
+    height: 2.5em;
+    transform-origin: 50% 30%;
+}
+
+.hamster__limb--br {
+    animation: hamsterBRLimb var(--dur) linear infinite;
+    background: linear-gradient(hsl(30, 90%, 80%) 90%, hsl(0, 90%, 75%) 90%);
+    transform: rotate(-25deg) translateZ(-1px);
+}
+
+.hamster__limb--bl {
+    animation: hamsterBLLimb var(--dur) linear infinite;
+    background: linear-gradient(hsl(30, 90%, 90%) 90%, hsl(0, 90%, 85%) 90%);
+    transform: rotate(-25deg);
+}
+
+.hamster__tail {
+    animation: hamsterTail var(--dur) linear infinite;
+    background: hsl(0, 90%, 85%);
+    border-radius: 0.25em 50% 50% 0.25em;
+    box-shadow: 0 -0.2em 0 hsl(0, 90%, 75%) inset;
+    top: 1.5em;
+    right: -0.5em;
+    width: 1em;
+    height: 0.5em;
+    transform: rotate(30deg) translateZ(-1px);
+    transform-origin: 0.25em 0.25em;
+}
+
+.spoke {
+    animation: spoke var(--dur) linear infinite;
+    background: radial-gradient(100% 100% at center, hsl(0, 0%, 60%) 4.8%, hsla(0, 0%, 60%, 0) 5%),
+        linear-gradient(hsla(0, 0%, 55%, 0) 46.9%, hsl(0, 0%, 65%) 47% 52.9%, hsla(0, 0%, 65%, 0) 53%) 50% 50% / 99% 99% no-repeat;
+}
+
+/* Animations */
+@keyframes hamster {
+
+    from,
+    to {
+        transform: rotate(4deg) translate(-0.8em, 1.85em);
+    }
+
+    50% {
+        transform: rotate(0) translate(-0.8em, 1.85em);
+    }
+}
+
+@keyframes hamsterHead {
+
+    from,
+    25%,
+    50%,
+    75%,
+    to {
+        transform: rotate(0);
+    }
+
+    12.5%,
+    37.5%,
+    62.5%,
+    87.5% {
+        transform: rotate(8deg);
+    }
+}
+
+@keyframes hamsterEye {
+
+    from,
+    90%,
+    to {
+        transform: scaleY(1);
+    }
+
+    95% {
+        transform: scaleY(0);
+    }
+}
+
+@keyframes hamsterEar {
+
+    from,
+    25%,
+    50%,
+    75%,
+    to {
+        transform: rotate(0);
+    }
+
+    12.5%,
+    37.5%,
+    62.5%,
+    87.5% {
+        transform: rotate(12deg);
+    }
+}
+
+@keyframes hamsterBody {
+
+    from,
+    25%,
+    50%,
+    75%,
+    to {
+        transform: rotate(0);
+    }
+
+    12.5%,
+    37.5%,
+    62.5%,
+    87.5% {
+        transform: rotate(-2deg);
+    }
+}
+
+@keyframes hamsterFRLimb {
+
+    from,
+    25%,
+    50%,
+    75%,
+    to {
+        transform: rotate(50deg) translateZ(-1px);
+    }
+
+    12.5%,
+    37.5%,
+    62.5%,
+    87.5% {
+        transform: rotate(-30deg) translateZ(-1px);
+    }
+}
+
+@keyframes hamsterFLLimb {
+
+    from,
+    25%,
+    50%,
+    75%,
+    to {
+        transform: rotate(-30deg);
+    }
+
+    12.5%,
+    37.5%,
+    62.5%,
+    87.5% {
+        transform: rotate(50deg);
+    }
+}
+
+@keyframes hamsterBRLimb {
+
+    from,
+    25%,
+    50%,
+    75%,
+    to {
+        transform: rotate(-60deg) translateZ(-1px);
+    }
+
+    12.5%,
+    37.5%,
+    62.5%,
+    87.5% {
+        transform: rotate(20deg) translateZ(-1px);
+    }
+}
+
+@keyframes hamsterBLLimb {
+
+    from,
+    25%,
+    50%,
+    75%,
+    to {
+        transform: rotate(20deg);
+    }
+
+    12.5%,
+    37.5%,
+    62.5%,
+    87.5% {
+        transform: rotate(-60deg);
+    }
+}
+
+@keyframes hamsterTail {
+
+    from,
+    25%,
+    50%,
+    75%,
+    to {
+        transform: rotate(30deg) translateZ(-1px);
+    }
+
+    12.5%,
+    37.5%,
+    62.5%,
+    87.5% {
+        transform: rotate(10deg) translateZ(-1px);
+    }
+}
+
+@keyframes spoke {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(-1turn);
+    }
+}
+
+

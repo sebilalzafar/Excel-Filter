@@ -1,0 +1,301 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  body {
+    width: 100%;
+    height: 100%;
+    --color: #e1e1e1;
+    background-color: #f3f3f3;
+    background-image: linear-gradient(
+        0deg,
+        transparent 24%,
+        var(--color) 25%,
+        var(--color) 26%,
+        transparent 27%,
+        transparent 74%,
+        var(--color) 75%,
+        var(--color) 76%,
+        transparent 77%,
+        transparent
+      ),
+      linear-gradient(
+        90deg,
+        transparent 24%,
+        var(--color) 25%,
+        var(--color) 26%,
+        transparent 27%,
+        transparent 74%,
+        var(--color) 75%,
+        var(--color) 76%,
+        transparent 77%,
+        transparent
+      );
+    background-size: 55px 55px;
+  }
+</style>
+
+<nav class="navbar bg-body-tertiary">
+  <div class="container">
+    <a href="{% url 'home' %}" class="btn btn-outline-success" type="submit"
+      >Go To Home</a
+    >
+    <a href="{% url 'all_names' %}" class="btn btn-primary" type="submit"
+      >Muslim Names List</a
+    >
+  </div>
+</nav>
+
+<div class="container">
+  <hr />
+  <div class="row">
+    <div class="col-xl-6 col-lg-6">
+      <div class="card l-bg-cherry">
+        <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="mb-4">
+            <h6 class="card-title mb-0">File Name: {{file.file}}</h6>
+            <p>Date: {{file.created_at}}</p>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+            <div class="col-8">
+              <h4 class="d-flex align-items-center mb-0">
+                Total Headers: {{count}}
+              </h4>
+            </div>
+          </div>
+          <div class="progress mt-1" data-height="8" style="height: 8px">
+            <div
+              class="progress-bar l-bg-cyan"
+              data-width="{{ count }}%"
+              aria-valuenow="{{ count }}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              style="width: {{ count }}%;"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 col-lg-6">
+      <div class="card l-bg-blue-dark">
+        <div class="card-statistic-3 p-4">
+          <div class="card-icon card-icon-large">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="mb-4">
+            <h5 class="card-title mb-0">Total Downloads:</h5>
+          </div>
+          <div class="row align-items-center mb-2 d-flex">
+            <div class="col-8">
+              <h2 class="d-flex align-items-center mb-0">
+                {{file.total_downloads}}
+              </h2>
+            </div>
+          </div>
+          <div class="progress mt-1" data-height="8" style="height: 8px">
+            <div
+              class="progress-bar l-bg-green"
+              role="progressbar"
+              data-width="25%"
+              aria-valuenow="25"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              style="width: 25%"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form id="filterForm" method="POST">
+    <ul
+      id="selectedList"
+      class="d-none selected-list list-group list-group-flush"
+    >
+      <h5 class="m-2">Selected Predefined Filters:</h5>
+      <div id="predefinedFilters">
+        <li class="list-group-item">An item</li>
+      </div>
+      <h5 class="m-2">Selected Header Filters:</h5>
+      <div id="headerFilters">
+        <li class="list-group-item">A second item</li>
+      </div>
+      <button id="submitButton" class="btn btn-primary float-end">
+        Submit And Download
+      </button>
+    </ul>
+    <hr />
+    <!-- predefined filers -->
+    <div class="row">
+      <div class="col-12">
+        <h3 class="fw-bold">Predefined Filters:</h3>
+      </div>
+    </div>
+    {% csrf_token %}
+    <div class="mt-2 row">
+      <div class="col-3 p-3">
+        <div class="checkbox-wrapper-12">
+          <div class="cbx">
+            <input
+              id="cbx-12"
+              name="predefined"
+              class="predefined"
+              value="only_male"
+              type="checkbox"
+            />
+            <label for="cbx-12"></label>
+            <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
+              <path d="M2 8.36364L6.23077 12L13 2"></path>
+            </svg>
+          </div>
+
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+              <filter id="goo-12">
+                <feGaussianBlur
+                  in="SourceGraphic"
+                  stdDeviation="4"
+                  result="blur"
+                ></feGaussianBlur>
+                <feColorMatrix
+                  in="blur"
+                  mode="matrix"
+                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7"
+                  result="goo-12"
+                ></feColorMatrix>
+                <feBlend in="SourceGraphic" in2="goo-12"></feBlend>
+              </filter>
+            </defs>
+          </svg>
+          <span class="text-break fs-5 label">All Males</span>
+        </div>
+      </div>
+      <div class="col-3 p-3">
+        <div class="checkbox-wrapper-12">
+          <div class="cbx">
+            <input
+              id="cbx-12"
+              name="predefined"
+              class="predefined"
+              value="only_female"
+              type="checkbox"
+            />
+            <label for="cbx-12"></label>
+            <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
+              <path d="M2 8.36364L6.23077 12L13 2"></path>
+            </svg>
+          </div>
+
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+              <filter id="goo-12">
+                <feGaussianBlur
+                  in="SourceGraphic"
+                  stdDeviation="4"
+                  result="blur"
+                ></feGaussianBlur>
+                <feColorMatrix
+                  in="blur"
+                  mode="matrix"
+                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7"
+                  result="goo-12"
+                ></feColorMatrix>
+                <feBlend in="SourceGraphic" in2="goo-12"></feBlend>
+              </filter>
+            </defs>
+          </svg>
+          <span class="text-break fs-5 label">All Females</span>
+        </div>
+      </div>
+      <div class="col-3 p-3">
+        <div class="checkbox-wrapper-12">
+          <div class="cbx">
+            <input
+              id="cbx-12"
+              name="predefined"
+              class="predefined"
+              value="musllim_arabic_name"
+              type="checkbox"
+            />
+            <label for="cbx-12"></label>
+            <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
+              <path d="M2 8.36364L6.23077 12L13 2"></path>
+            </svg>
+          </div>
+
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+              <filter id="goo-12">
+                <feGaussianBlur
+                  in="SourceGraphic"
+                  stdDeviation="4"
+                  result="blur"
+                ></feGaussianBlur>
+                <feColorMatrix
+                  in="blur"
+                  mode="matrix"
+                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7"
+                  result="goo-12"
+                ></feColorMatrix>
+                <feBlend in="SourceGraphic" in2="goo-12"></feBlend>
+              </filter>
+            </defs>
+          </svg>
+          <span class="text-break fs-5 label">Inlist Muslims (Arabic Name)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- file headers -->
+    <hr />
+    <div class="row">
+      <div class="col-12">
+        <h3 class="fw-bold">File Headers:</h3>
+      </div>
+    </div>
+    <div class="mt-2 row">
+      {% for header in file.headers %}
+      <div class="col-3 p-3">
+        <div class="checkbox-wrapper-12">
+          <div class="cbx">
+            <input
+              id="cbx-12"
+              name="file_header"
+              class="file_header"
+              value="{{header}}"
+              type="checkbox"
+            />
+            <label for="cbx-12"></label>
+            <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
+              <path d="M2 8.36364L6.23077 12L13 2"></path>
+            </svg>
+          </div>
+
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+              <filter id="goo-12">
+                <feGaussianBlur
+                  in="SourceGraphic"
+                  stdDeviation="4"
+                  result="blur"
+                ></feGaussianBlur>
+                <feColorMatrix
+                  in="blur"
+                  mode="matrix"
+                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7"
+                  result="goo-12"
+                ></feColorMatrix>
+                <feBlend in="SourceGraphic" in2="goo-12"></feBlend>
+              </filter>
+            </defs>
+          </svg>
+          <span class="text-break fs-5 label">{{header}}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </form>
+</div>
+
+{% endblock content %} {% block script %} {% endblock script %}

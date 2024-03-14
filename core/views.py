@@ -3,7 +3,6 @@ from .models import *
 # Create your views here.
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
-
 from openpyxl import load_workbook, Workbook
 import tempfile
 import os
@@ -49,10 +48,12 @@ def home2(request):
 
 def all_names(request):
     existing_object = muslimNames.objects.first()
+    print(existing_object)
     if request.method == "POST":
         name = request.POST.get("name")
         gender = request.POST.get("gender")
         file = request.FILES.get("file_with_name")
+        
         name.lower()
         if name:
             print(name, gender)
@@ -122,6 +123,7 @@ def header_checks(request, pk):
         predefined = request.POST.getlist('predefined')
         file_header = request.POST.getlist('file_header')
 
+        
         if 'only_male' in predefined or 'only_female' in predefined:
             # Load the Excel file
             wb = load_workbook(file.file)

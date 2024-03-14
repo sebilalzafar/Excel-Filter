@@ -124,85 +124,81 @@ def header_checks(request, pk):
         file_header = request.POST.getlist('file_header')
 
         
-        if 'only_male' in predefined or 'only_female' in predefined:
-            # Load the Excel file
-            wb = load_workbook(file.file)
-            ws = wb.active
-            # Find the index of the "persongender" column
-            gender_col_index = None
-            for index, header in enumerate(file.headers):
-                if header.lower() == 'persongender':
-                    gender_col_index = index
-                    break
-          
-            # Find the index of the "persongender" column
-            personname_col_index = None
-            for index, header in enumerate(file.headers):
-                if header.lower() == 'personfirstname':
-                    personname_col_index = index
-                    break
+        # Load the Excel file
+        wb = load_workbook(file.file)
+        ws = wb.active
+        # Find the index of the "persongender" column
+        gender_col_index = None
+        for index, header in enumerate(file.headers):
+            if header.lower() == 'persongender':
+                gender_col_index = index
+                break
+        
+        # Find the index of the "persongender" column
+        personname_col_index = None
+        for index, header in enumerate(file.headers):
+            if header.lower() == 'personfirstname':
+                personname_col_index = index
+                break
 
-            # Filter rows based on predefined filters and the "persongender" column
-            filtered_rows = []
-            if gender_col_index is not None:
-                # Start iterating from the second row
-                for row in ws.iter_rows(min_row=2):
-                    gender = row[gender_col_index].value.lower()
-                    
-                    if ('only_male' in predefined and gender == 'm' or gender == "male") or ('only_female' in predefined and gender == 'f' or gender == "female"):
-                        filtered_rows.append([cell.value for cell in row])
+        # Filter rows based on predefined filters and the "persongender" column
+        filtered_rows = []
+            # Start iterating from the second row
+        for row in ws.iter_rows(min_row=2):
+                filtered_rows.append([cell.value for cell in row])
+                
 
-            if 'musllim_arabic_name' in predefined:
-                filtered_muslims = []
-                for row in filtered_rows:
-                    personname = row[personname_col_index].strip().lower()
-                    if personname:
-                        if personname.lower() in [obj.lower() for obj in male_names] or personname.lower() in [obj.lower() for obj in female_names]:
-                            filtered_muslims.append(row)
-                # Select columns based on file headers
-                filtered_rows = filtered_muslims
-            
-            selected_columns = []
+        if 'musllim_arabic_name' in predefined:
+            filtered_muslims = []
             for row in filtered_rows:
-                selected_row = []
-                for index, header in enumerate(file.headers):
-                    if header in file_header:
-                        selected_row.append(row[index])
-                selected_columns.append(selected_row)
+                personname = row[personname_col_index].strip().lower()
+                if personname:
+                    if personname.lower() in [obj.lower() for obj in male_names] or personname.lower() in [obj.lower() for obj in female_names]:
+                        filtered_muslims.append(row)
+            # Select columns based on file headers
+            filtered_rows = filtered_muslims
+        
+        selected_columns = []
+        for row in filtered_rows:
+            selected_row = []
+            for index, header in enumerate(file.headers):
+                if header in file_header:
+                    selected_row.append(row[index])
+            selected_columns.append(selected_row)
 
-            # Create a new workbook containing the selected columns
-            new_wb = Workbook()
-            new_ws = new_wb.active
+        # Create a new workbook containing the selected columns
+        new_wb = Workbook()
+        new_ws = new_wb.active
 
-            # Insert header names in the first row
-            for col_index, header_name in enumerate(file_header, start=1):
-                new_ws.cell(row=1, column=col_index, value=header_name)
+        # Insert header names in the first row
+        for col_index, header_name in enumerate(file_header, start=1):
+            new_ws.cell(row=1, column=col_index, value=header_name)
 
-            # Append selected data rows
-            for row_index, row_data in enumerate(selected_columns, start=2):
-                for col_index, cell_value in enumerate(row_data, start=1):
-                    new_ws.cell(row=row_index, column=col_index,
-                                value=cell_value)
+        # Append selected data rows
+        for row_index, row_data in enumerate(selected_columns, start=2):
+            for col_index, cell_value in enumerate(row_data, start=1):
+                new_ws.cell(row=row_index, column=col_index,
+                            value=cell_value)
 
-            # Save the new Excel file to a temporary file
-            temp_file_path = os.path.join(
-                tempfile.gettempdir(), 'filtered_data.xlsx')
-            new_wb.save(temp_file_path)
+        # Save the new Excel file to a temporary file
+        temp_file_path = os.path.join(
+            tempfile.gettempdir(), 'filtered_data.xlsx')
+        new_wb.save(temp_file_path)
 
-            # Serve the new Excel file as a downloadable response
-            response = HttpResponse(
-                content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            response['Content-Disposition'] = 'attachment; filename="filtered_data.xlsx"'
-            with open(temp_file_path, 'rb') as f:
-                response.write(f.read())
+        # Serve the new Excel file as a downloadable response
+        response = HttpResponse(
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="filtered_data.xlsx"'
+        with open(temp_file_path, 'rb') as f:
+            response.write(f.read())
 
-            # Delete the temporary file
-            os.remove(temp_file_path)
+        # Delete the temporary file
+        os.remove(temp_file_path)
 
-            file.total_downloads += 1
-            file.save()
+        file.total_downloads += 1
+        file.save()
 
-            return response
+        return response
     context = {
         'file': file,
         'count': count,
